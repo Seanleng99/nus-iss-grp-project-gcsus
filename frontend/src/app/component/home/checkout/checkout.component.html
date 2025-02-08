@@ -1,0 +1,53 @@
+<app-navigation></app-navigation>
+
+<div class="hero_area">
+    <div class="body">
+        <div class="main">
+            <!-- Checkout Form -->
+            <section class="sign-in">
+                <div class="container">
+                    <div class="signin-content">
+                        <div class="signin-image">
+                            <figure><img src="assets/img/payment.png" alt="payment image"></figure>
+                            <div class="back-to-cart" routerLink="/home/cart"><a><i class="fa fa-angle-left"></i></a><span class="text-muted"> Back to cart</span></div>
+                            <!-- <a routerLink="/home/cart" class="signup-image-link"><i class="fa fa-angle-left"></i> Back to cart</a> -->
+                        </div>
+    
+                        <div class="signin-form">
+                            <h2 class="form-title">Check Out</h2>
+                            <form class="register-form" id="login-form" #f="ngForm" (ngSubmit)="f.form.valid && placeOrder(paymentType, amount, phone)">
+                                <div class="form-group">
+                                    <div class="control-label col-m-10">Payment Type:</div>
+                                    <div class="col-m-10">
+                                        <select class="form-control" ngModel name="paymentType" placeholder="Payment Type" #paymentType required>
+                                            <option value="" disabled selected>Select your payment method</option>
+                                            <option value="Credit Card">Credit Card</option>
+                                            <option value="Bank Transfer">Bank Transfer</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="control-label col-m-10">Amount:</div>
+                                    <input type="text" ngModel name="amount" placeholder="Total Amount" #amount disabled required [value]="this.totalSum"/>
+                                </div>
+                                <div class="form-group">
+                                    <div class="control-label col-m-10">Phone Number:</div>
+                                    <input type="number" ngModel name="phone" #phone placeholder="+12342223456" [value]="this.model.phonenumber"/>
+                                </div>
+                                <div class="form-group" *ngIf="paymentType.value == 'Bank Transfer'">
+                                    <div class="control-label col-m-10">Bank Transfer Receipt:</div>
+                                    <input type="file" placeholder="Bank Transfer Receipt" #image
+                                        accept="image/*" name="image"
+                                        (change)="handleFileInput($event.target.files)">
+                                </div>
+                                <div class="form-group form-button">
+                                    <input type="submit" name="payment" id="payment" class="form-submit" value="Pay"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

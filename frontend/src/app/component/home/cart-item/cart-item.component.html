@@ -1,0 +1,56 @@
+<app-navigation></app-navigation>
+
+<div class="hero_area">
+  <div class="body">
+    <div class="card">
+      <div class="row">
+          <div class="col-md-8 cart">
+              <div class="title">
+                  <div class="row">
+                      <div class="col"><h4><b>Shopping Cart</b></h4></div>
+                      <div class="col align-self-center text-right text-muted">{{api.cartAmount}} items</div>
+                  </div>
+              </div>
+              <ng-container *ngFor="let cart of cartlist">
+                <div class="row border-top border-bottom">
+                  <div class="row main align-items-center">
+                      <div class="col">
+                          <div class="row text-muted">{{cart.productname}}</div>
+                      </div>
+                      <div class="col">
+                        <input type="number" value="{{cart.quantity}}" #quant>
+                        <input type="hidden" value="{{cart.bufcartId}}" #prod>
+                      </div>
+                      <div class="col">
+                        <button class="btn" (click)="updateCart(prod,quant)">Update</button>
+                      </div>
+                      <div class="col">{{cart.price | currency:'USD'}}<span class="close" (click)="deleteItem(prod)">&#10005;</span></div>
+                  </div>
+                </div>
+              </ng-container>
+              
+              <div class="back-to-shop" routerLink="/home"><a><i class="fa fa-angle-left"></i></a><span class="text-muted">Back to shop</span></div>
+          </div>
+          <div class="col-md-4 summary">
+              <div><h5><b>Summary</b></h5></div>
+              <hr>
+              <div class="row">
+                  <div class="col">ITEMS {{api.cartAmount}}</div>
+                  <div class="col text-right">{{totalSum | currency:'USD'}}</div>
+              </div>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <br>
+              <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                  <div class="col">TOTAL PRICE</div>
+                  <div class="col text-right">{{totalSum | currency:'USD'}}</div>
+              </div>
+              <button class="btn" (click)="placeOrder()" [disabled]="cartlist.length === 0">CHECKOUT <i class="fa fa-angle-right"></i></button>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
