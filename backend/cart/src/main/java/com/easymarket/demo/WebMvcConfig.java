@@ -14,6 +14,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedOrigins(WebConstants.ALLOWED_URL)
                 .allowedOrigins(WebConstants.ALLOWED_URL_PROD)
                 .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
+                .allowedHeaders("*")
                 .maxAge(3600);
     }
 }
