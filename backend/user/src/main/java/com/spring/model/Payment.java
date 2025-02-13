@@ -21,7 +21,7 @@ public class Payment {
 	@Column(name = "phone_number")
 	private String phonenumber;
 	
-	@Column(name = "payment_yype")
+	@Column(name = "payment_type")
 	private String paymentType;
 	
 	@Column(name = "amount")
