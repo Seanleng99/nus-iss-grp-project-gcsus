@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.spring.constants.ResponseCode;
 import com.spring.constants.WebConstants;
 import com.spring.exception.OrderCustomException;
-import com.spring.model.PlaceOrder;
+import com.spring.model.Order;
 import com.spring.repository.CartRepository;
 import com.spring.repository.OrderRepository;
-import com.spring.response.Order;
 import com.spring.response.ServerResponse;
 import com.spring.response.ViewOrderResponse;
+import com.spring.response.OrderResponse2;
 import com.spring.util.Validator;
 
 @CrossOrigin(origins = { WebConstants.ALLOWED_URL, WebConstants.ALLOWED_URL_PROD })
@@ -44,10 +44,10 @@ public class AdminOrderController {
         try {
             resp.setStatus(ResponseCode.SUCCESS_CODE);
             resp.setMessage(ResponseCode.VIEW_SUCCESS_MESSAGE);
-            List<Order> orderList = new ArrayList<>();
-            List<PlaceOrder> poList = ordRepo.findAll();
+            List<OrderResponse2> orderList = new ArrayList<>();
+            List<Order> poList = ordRepo.findAll();
             poList.forEach((po) -> {
-                Order ord = new Order();
+                com.spring.response.OrderResponse2 ord = new com.spring.response.OrderResponse2();
                 ord.setOrderBy(po.getEmail());
                 ord.setOrderId(po.getOrderId());
                 ord.setOrderStatus(po.getOrderStatus());
@@ -73,7 +73,7 @@ public class AdminOrderController {
             return new ResponseEntity<ServerResponse>(resp, HttpStatus.NOT_ACCEPTABLE);
         } else {
             try {
-                PlaceOrder pc = ordRepo.findByOrderId(Integer.parseInt(orderId));
+                Order pc = ordRepo.findByOrderId(Integer.parseInt(orderId));
                 pc.setOrderStatus(orderStatus);
                 pc.setOrderDate(new Date(System.currentTimeMillis()));
                 ordRepo.save(pc);

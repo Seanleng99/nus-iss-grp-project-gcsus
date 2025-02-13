@@ -2,6 +2,7 @@ package com.spring.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,24 +13,36 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "address")
+@Table(name = "Address")
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 4265352674204944987L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "address_id")
 	private Long id;
 
+	@Column(name = "address")
 	private String address;
+
+	@Column(name = "city")
 	private String city;
+
+	@Column(name = "state")
 	private String state;
+
+	@Column(name = "country")
 	private String country;
+
+	@Column(name = "zipcode")
 	private int zipcode;
+
+	@Column(name = "phone_number")
 	private String phonenumber;
 
 	@OneToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "userid", nullable = false)
+	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
 	public String getAddress() {

@@ -3,11 +3,13 @@ package com.spring.response;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.spring.response.OrderResponse2;
+
 public class ViewOrderResponse {
 	private String status;
 	private String message;
 	private String AUTH_TOKEN;
-	private List<Order> orderlist = new ArrayList<>();
+	private List<OrderResponse2> orderlist = new ArrayList<>();
 
 	public String getStatus() {
 		return status;
@@ -33,11 +35,11 @@ public class ViewOrderResponse {
 		this.AUTH_TOKEN = aUTH_TOKEN;
 	}
 
-	public List<Order> getOrderlist() {
+	public List<OrderResponse2> getOrderlist() {
 		return orderlist;
 	}
 
-	public void setOrderlist(List<Order> orderlist) {
+	public void setOrderlist(List<OrderResponse2> orderlist) {
 		this.orderlist = orderlist;
 	}
 

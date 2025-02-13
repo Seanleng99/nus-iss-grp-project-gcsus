@@ -6,14 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.spring.model.PlaceOrder;
+import com.spring.model.Order;
 
 @Repository
 @Transactional
-public interface OrderRepository extends JpaRepository<PlaceOrder, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
-	PlaceOrder findByOrderId(int orderId);
+	Order findByOrderId(int orderId);
 
-	List<PlaceOrder> findAll();
+	List<Order> findAll();
 
 }

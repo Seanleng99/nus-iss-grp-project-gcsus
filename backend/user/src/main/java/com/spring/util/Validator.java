@@ -2,7 +2,7 @@ package com.spring.util;
 
 import com.spring.model.Address;
 import com.spring.model.Bufcart;
-import com.spring.model.PlaceOrder;
+import com.spring.model.Order;
 import com.spring.model.Product;
 import com.spring.model.User;
 
@@ -109,18 +109,18 @@ public class Validator {
 		return false;
 	}
 
-	public static boolean isPlaceOrderEmpty(PlaceOrder plaOrd) {
+	public static boolean isPlaceOrderEmpty(Order order) {
 
-		if (plaOrd.getEmail() == null || plaOrd.getEmail() == "") {
+		if (order.getEmail() == null || order.getEmail() == "") {
 			return true;
 		}
-		if (plaOrd.getOrderDate() == null) {
+		if (order.getOrderDate() == null) {
 			return true;
 		}
-		if (plaOrd.getTotalCost() == 0) {
+		if (order.getTotalCost() == 0) {
 			return true;
 		}
-		if (plaOrd.getOrderStatus() == null || plaOrd.getOrderStatus() == "") {
+		if (order.getOrderStatus() == null || order.getOrderStatus() == "") {
 			return true;
 		}
 		return false;

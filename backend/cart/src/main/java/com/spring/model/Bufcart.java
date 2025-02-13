@@ -8,8 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Bufcart")
 public class Bufcart implements Serializable {
 
 	private static final long serialVersionUID = 4049687597028261161L;
@@ -37,16 +39,22 @@ public class Bufcart implements Serializable {
 				+ ", productname=" + productname + "]";
 	}
 
+	@Column(name = "email")
 	private String email;
 
 	@Column(name = "date_added")
 	private Date dateAdded;
 
+	@Column(name = "quantity")
 	private int quantity;
+
+	@Column(name = "price")
 	private double price;
+
 	@Column(name = "product_id")
 	private int productId;
 
+	@Column(name = "product_name")
 	private String productname;
 
 	public String getProductname() {

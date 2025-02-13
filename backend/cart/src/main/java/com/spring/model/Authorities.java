@@ -9,19 +9,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "Authorities")
 public class Authorities implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6005072159059903199L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "AUTHORITY_ID")
+	@Column(name = "authority_id")
 	private int authorityId;
+
+	@Column(name = "username")
 	private String username;
+
+	@Column(name = "authority")
 	private String authority;
 
 	@ManyToOne

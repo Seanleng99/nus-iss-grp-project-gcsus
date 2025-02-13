@@ -2,6 +2,7 @@ package com.spring.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,14 +15,26 @@ import javax.persistence.Table;
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = -7446162716367847201L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "product_id")
 	private int productid;
+
+	@Column(name = "description")
 	private String description;
+
+	@Column(name = "product_name")
 	private String productname;
+
+	@Column(name = "price")
 	private double price;
+
+	@Column(name = "quantity")
 	private int quantity;
+
 	@Lob
+	@Column(name = "product_image")
 	private byte[] productimage;
 
 	public int getProductid() {

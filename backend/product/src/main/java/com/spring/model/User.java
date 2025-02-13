@@ -12,18 +12,30 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "User")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = -8850740904859933967L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int userid;
+
+	@Column(name = "email")
 	private String email;
+
+	@Column(name = "username")
 	private String username;
+
+	@Column(name = "password")
 	private String password;
+
+	@Column(name = "user_type")
 	private String usertype;
+	
 	@Column(name = "is_enabled")
 	private boolean isEnabled;
 

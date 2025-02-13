@@ -2,7 +2,7 @@
 FROM tomcat:9.0.82-jdk8-corretto
 
 # Maintainer for this Image 
-MAINTAINER "nus-iss-grp1" 
+MAINTAINER "nus-iss-grp-project-gcsus"
 
 # Copy to war file to tomcat path  
 ADD target/cart.war /usr/local/tomcat/webapps/cart.war

@@ -16,7 +16,7 @@ import com.spring.constants.ResponseCode;
 import com.spring.constants.WebConstants;
 import com.spring.exception.PlaceOrderCustomException;
 import com.spring.model.Bufcart;
-import com.spring.model.PlaceOrder;
+import com.spring.model.Order;
 import com.spring.repository.CartRepository;
 import com.spring.repository.OrderRepository;
 import com.spring.repository.PaymentRepository;
@@ -48,7 +48,7 @@ public class UserOrderController {
         try {
 //            User loggedUser = userRepo.findByUsername(auth.getName())
 //                    .orElseThrow(() -> new UserCustomException(auth.getName()));
-            PlaceOrder po = new PlaceOrder();
+            Order po = new Order();
             po.setEmail(userDTO.getEmail());
             Date date = new Date();
             po.setOrderDate(date);
@@ -59,7 +59,7 @@ public class UserOrderController {
                 total += buf.getQuantity() * buf.getPrice();
             }
             po.setTotalCost(total);
-            PlaceOrder res = ordRepo.save(po);
+            Order res = ordRepo.save(po);
             buflist.forEach(bufcart -> {
                 bufcart.setOrderId(res.getOrderId());
                 cartRepo.save(bufcart);

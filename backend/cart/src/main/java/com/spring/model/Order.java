@@ -10,14 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Place_Order")
-public class PlaceOrder {
+@Table(name = "Order")
+public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_id")
 	private int orderId;
 
+	@Column(name = "email")
 	private String email;
 
 	@Column(name = "order_status")
@@ -69,7 +70,7 @@ public class PlaceOrder {
 		this.orderStatus = orderStatus;
 	}
 
-	public PlaceOrder(int orderId, String email, String orderStatus, Date orderDate, double totalCost) {
+	public Order(int orderId, String email, String orderStatus, Date orderDate, double totalCost) {
 		super();
 		this.orderId = orderId;
 		this.email = email;
@@ -78,7 +79,7 @@ public class PlaceOrder {
 		this.totalCost = totalCost;
 	}
 
-	public PlaceOrder() {
+	public Order() {
 		super();
 	}
 
