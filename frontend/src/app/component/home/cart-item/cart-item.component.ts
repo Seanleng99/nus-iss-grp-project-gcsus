@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/service/api.service';
-import { Cart } from 'src/app/model/cart';
-import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { Cart } from '../../../model/cart';
+import { ApiService } from '../../../service/api.service';
+import { CommonModule } from '@angular/common';
+import { NavigationComponent } from '../../navigation/navigation.component';
 
 @Component({
   selector: 'app-cart-item',
+  imports: [CommonModule, NavigationComponent],
   templateUrl: './cart-item.component.html',
-  styleUrls: ['./cart-item.component.css']
+  styleUrl: './cart-item.component.scss'
 })
 export class CartItemComponent implements OnInit {
 
-  private auth: string;
+  private auth!: string;
   cartlist: Cart[] = [];
   totalSum: number = 0;
   constructor(public api: ApiService, private route: Router) {

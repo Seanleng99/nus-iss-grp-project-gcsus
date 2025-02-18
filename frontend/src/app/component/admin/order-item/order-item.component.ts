@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/service/api.service';
+import { ApiService } from '../../../service/api.service';
+import { CommonModule } from '@angular/common';
+import { NavigationComponent } from '../../navigation/navigation.component';
 
 @Component({
-  selector: 'order-item',
+  selector: 'app-order-item',
+  imports: [CommonModule, NavigationComponent],
   templateUrl: './order-item.component.html',
-  styleUrls: ['./order-item.component.css']
+  styleUrl: './order-item.component.scss'
 })
 export class OrderItemComponent implements OnInit {
 
-  auth: string;
+  auth!: string;
   orderlist: any[] = [];
   constructor(private route: Router, private api: ApiService) { }
 

@@ -1,17 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/service/api.service';
-import { Router } from '@angular/router';
-import { FormBuilder } from '@angular/forms';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule, FormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule, NgStyle } from '@angular/common';
+import { ApiService } from '../../service/api.service';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-login',
+  imports: [ReactiveFormsModule, FormsModule, MatIconModule,CommonModule,
+    NgStyle, NavigationComponent, RouterLink],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrl: './login.component.scss'
 })
-export class LoginComponent implements OnInit {
-
-  loginForm: any;
+export class LoginComponent  {
+  loginForm!: FormGroup; 
   error = false;
   constructor(private apiService: ApiService,
     private router: Router,
@@ -76,5 +80,5 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/login']);
       });
   }
-  
+
 }

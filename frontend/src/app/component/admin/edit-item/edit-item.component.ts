@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Product } from 'src/app/model/product';
-import { ApiService } from 'src/app/service/api.service';
+import { Product } from '../../../model/product';
+import { ApiService } from '../../../service/api.service';
+import { FormsModule } from '@angular/forms';
+import { NavigationComponent } from '../../navigation/navigation.component';
 
 @Component({
   selector: 'app-edit-item',
+  imports: [FormsModule, NavigationComponent],
   templateUrl: './edit-item.component.html',
-  styleUrls: ['./edit-item.component.css']
+  styleUrl: './edit-item.component.scss'
 })
 export class EditItemComponent implements OnInit {
 
@@ -20,17 +23,17 @@ export class EditItemComponent implements OnInit {
     productimage: null
   };
   products: Product[] = [];
-  fileToUpload: File = null;
-  auth: string;
-  prodid: string;
+  fileToUpload!: File;
+  auth!: string;
+  prodid!: string;
   imageUrl: string = "/assets/img/noimage.png";
 
   constructor(private route: ActivatedRoute, private api: ApiService, private router: Router, private snackBar: MatSnackBar) {
-    if (this.api.isAuthenticated) {
+    if (this.api.isAuthenticated()) {
       this.auth = this.api.getToken();
       this.api.getProducts().subscribe(
         res => {
-          res.oblist.forEach(pro => {
+          res.oblist.forEach((pro: any) => {
             if (pro.productid == this.prodid) {
               this.product = pro;
               this.fileToUpload = pro.productimage;
@@ -47,14 +50,16 @@ export class EditItemComponent implements OnInit {
     });
   }
 
-  handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
+  handleFileInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+  if (inputElement.files && inputElement.files.length > 0) {
+    this.fileToUpload = inputElement.files[0]; // Get the first selected file
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
     }
     reader.readAsDataURL(this.fileToUpload);
-  }
+  }}
 
   updateProd(desc:any, quan:any, price:any, prodname:any, image:any) {
     console.log(this.product.productid)

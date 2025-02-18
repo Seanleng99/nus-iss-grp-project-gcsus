@@ -1,22 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Payment } from 'src/app/model/payment';
-import { ApiService } from 'src/app/service/api.service';
-import { Router } from '@angular/router';
-import { Address } from 'src/app/model/address';
-import { Cart } from 'src/app/model/cart';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Address } from '../../../model/address';
+import { Cart } from '../../../model/cart';
+import { ApiService } from '../../../service/api.service';
+import { NavigationComponent } from '../../navigation/navigation.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-checkout',
+  imports: [NavigationComponent, FormsModule, CommonModule],
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrl: './checkout.component.scss'
 })
 export class CheckoutComponent implements OnInit {
 
   cartlist: Cart[] = [];
   totalSum: number = 0;
   private paymentForm: any;
-  fileToUpload: File = null;
+  fileToUpload: File | null = null;
   imageUrl: string = "/assets/img/noimage.png";
   
   model: Address = {
@@ -48,14 +51,16 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
+  handleFileInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+  if (inputElement.files && inputElement.files.length > 0) {
+    this.fileToUpload = inputElement.files[0]; // Get the first selected file
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
     }
-    reader.readAsDataURL(this.fileToUpload);
-  }
+    reader.readAsDataURL(this.fileToUpload as File);
+  }}
 
   // addOrUpdateAddress() {
   //   this.api.addOrUpdateAddress(this.model).subscribe(res => {
@@ -87,4 +92,3 @@ export class CheckoutComponent implements OnInit {
   }
 
 }
-

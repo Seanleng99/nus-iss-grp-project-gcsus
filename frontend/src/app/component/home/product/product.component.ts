@@ -1,26 +1,26 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Product } from 'src/app/model/product';
-import { EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { Product } from '../../../model/product';
 
 @Component({
   selector: 'app-product',
+  imports: [],
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.css']
+  styleUrl: './product.component.scss'
 })
 export class ProductComponent implements OnInit {
 
   imageSource: any;
-  @Input() public product;
+  @Input()
+  public product!: Product;
 
   @Output() productAddToCart: EventEmitter<Product> = new EventEmitter<Product>();
   constructor(private http: HttpClient,
     private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
-    this.convertBase64ToImage(this.product.productimage);
+    this.convertBase64ToImage( this.product.productimage ? URL.createObjectURL(this.product.productimage) : "");
   }
 
   addToCart() {

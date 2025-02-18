@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Address } from 'src/app/model/address';
-import { ApiService } from 'src/app/service/api.service';
-import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { Address } from '../../../model/address';
+import { ApiService } from '../../../service/api.service';
+import { FormsModule } from '@angular/forms';
+import { NavigationComponent } from '../../navigation/navigation.component';
 
 @Component({
   selector: 'app-address',
+  imports: [FormsModule, NavigationComponent],
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.css']
+  styleUrl: './address.component.scss'
 })
 export class AddressComponent implements OnInit {
 

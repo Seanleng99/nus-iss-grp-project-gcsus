@@ -1,17 +1,15 @@
-import { Injectable, Inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpEvent, HttpRequest } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Product } from '../model/product';
-import { User } from '../model/user';
-import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
-import { Address } from '../model/address';
-import { environment } from 'src/environments/environment';
-import { CartDTO } from '../dto/CartDTO';
-import { CartRequestDTO } from '../dto/CartRequestDTO';
-import { ProductDTO } from '../dto/ProductDTO';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { SessionStorageService } from 'ngx-webstorage';
+import { environment } from '../../environments/environment';
 import { UserDTO } from '../dto/UserDTO';
-import { Payment } from '../model/payment';
-import { API } from 'src/environments/apis';
+import { User } from '../model/user';
+import { Observable } from 'rxjs';
+import { API } from '../../environments/apis';
+import { Address } from '../model/address';
+import { ProductDTO } from '../dto/ProductDTO';
+import { CartRequestDTO } from '../dto/CartRequestDTO';
+import { CartDTO } from '../dto/CartDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -22,36 +20,17 @@ export class ApiService {
   PRODUCT = 'PRODUCT';
   CART = 'CART';
 
-  cartDTO: CartDTO = {
-    cartId: null,
-    cartQuantity: 0
-  };
+  cartDTO: CartDTO = new CartDTO;
+  productDTO: ProductDTO = new ProductDTO;
+  userDTO: UserDTO = new UserDTO;
+  cartRequestDTO: CartRequestDTO = new CartRequestDTO;
 
-  productDTO: ProductDTO = {
-    productId: null,
-    productName: '',
-    productPrice: 0,
-    productQuantity: 0
-  };
+  public cartAmount: number = 0;
 
-  userDTO: UserDTO = {
-    name: '',
-    email: ''
-  };
+  constructor(private sessionStorage:SessionStorageService,private http: HttpClient) {
+   }
 
-  cartRequestDTO: CartRequestDTO = {
-    userDTO: this.userDTO,
-    cartDTO: this.cartDTO,
-    productDTO: this.productDTO
-  };
-
-  cartAmount: number = 0;
-  
-  constructor(@Inject(SESSION_STORAGE) private storage: StorageService, private http: HttpClient) {
-
-  }
-  
-  getBaseApiURL(type) {
+  getBaseApiURL(type:any) {
     if (type === this.USER) {
       return environment.userBaseUrl;
     }
@@ -63,10 +42,12 @@ export class ApiService {
     if (type === this.CART) {
       return environment.orderBaseUrl;
     }
+
+    return "";
   }
 
-  // Register new users to the system
-  register(user: User): Observable<any> {
+   // Register new users to the system
+   register(user: User): Observable<any> {
     return this.http.post(this.getBaseApiURL(this.USER) + API.signupUrl,
       JSON.stringify(user),
       {
@@ -75,9 +56,9 @@ export class ApiService {
           'Access-Control-Allow-Origin': '*' }
       });
   }
-  
-  // Validating user credentials
-  login(user: User): Observable<any> {
+
+   // Validating user credentials
+   login(user: User): Observable<any> {
     return this.http.post(this.getBaseApiURL(this.USER) + API.loginUrl,
       JSON.stringify(user),
       {
@@ -143,8 +124,8 @@ export class ApiService {
 
   // Add products to the cart
   addToCart(product: any): Observable<any> {
-    this.userDTO.name = this.storage.get("username");
-    this.userDTO.email = this.storage.get("email");
+    this.userDTO.name = this.sessionStorage.retrieve("username");
+    this.userDTO.email =this.sessionStorage.retrieve("email");
     this.productDTO.productId = product.productid;
     this.productDTO.productName = product.productname;
     this.productDTO.productPrice = product.price;
@@ -157,15 +138,15 @@ export class ApiService {
 
   // View cart items
   getCartItems(): Observable<any> {
-    this.userDTO.name = this.storage.get("username");
-    this.userDTO.email = this.storage.get("email");
+    this.userDTO.name = this.sessionStorage.retrieve("username");
+    this.userDTO.email = this.sessionStorage.retrieve("email");
     return this.http.post<any>(this.getBaseApiURL(this.CART) + API.viewCartUrl, this.userDTO);
   }
 
   // Update items quantity in the cart
   updateCartItem(prodid: number, quant: number): Observable<any> {
-    this.userDTO.name = this.storage.get("username");
-    this.userDTO.email = this.storage.get("email");
+    this.userDTO.name = this.sessionStorage.retrieve("username");
+    this.userDTO.email = this.sessionStorage.retrieve("email");
     this.cartDTO.cartId = prodid;
     this.cartDTO.cartQuantity = quant;
     this.cartRequestDTO.userDTO = this.userDTO;
@@ -176,8 +157,8 @@ export class ApiService {
 
   // Delete cart Item 
   deleteCartItem(bufdid: number): Observable<any> {
-    this.userDTO.name = this.storage.get("username");
-    this.userDTO.email = this.storage.get("email");
+    this.userDTO.name = this.sessionStorage.retrieve("username");
+    this.userDTO.email = this.sessionStorage.retrieve("email");
     this.cartDTO.cartId = bufdid;
     this.cartRequestDTO.userDTO = this.userDTO;
     this.cartRequestDTO.cartDTO = this.cartDTO;
@@ -192,8 +173,8 @@ export class ApiService {
 
   // Place the order 
   placeOrder(): Observable<any> {
-    this.userDTO.name = this.storage.get("username");
-    this.userDTO.email = this.storage.get("email");
+    this.userDTO.name = this.sessionStorage.retrieve("username");
+    this.userDTO.email = this.sessionStorage.retrieve("email");
     return this.http.post<any>(this.getBaseApiURL(this.CART) + API.placeOrderUrl, this.userDTO);
   }
 
@@ -222,29 +203,28 @@ export class ApiService {
   }
 
   storeToken(token: string, auth_type: string) {
-    this.storage.set("auth_token", token);
-    this.storage.set("auth_type", auth_type);
+    this.sessionStorage.store("auth_token", token);
+    this.sessionStorage.store("auth_type", auth_type);
   }
 
   storeUserInfo(user: User) {
-    this.storage.set("username", user.username);
-    this.storage.set("email", user.email);
+    this.sessionStorage.store("username", user.username);
+    this.sessionStorage.store("email", user.email);
   }
 
   getAuthType(): string {
-    if (this.storage.get("auth_type") !== null) {
-      return this.storage.get("auth_type");
+    if (this.sessionStorage.retrieve("auth_type") !== null) {
+      return this.sessionStorage.retrieve("auth_type");
     }
-    return null;
+    return "";
   }
 
   getToken() {
-    return this.storage.get("auth_token");
+    return this.sessionStorage.retrieve("auth_token");
   }
 
   removeToken() {
-    this.storage.remove("auth_type");
-    return this.storage.remove("auth_token");
+    this.sessionStorage.clear("auth_type");
+    return this.sessionStorage.clear("auth_token");
   }
-
 }

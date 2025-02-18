@@ -8,7 +8,7 @@
   <header class="header_section">
     <nav class="navbar navbar-expand-lg custom_nav-container">
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class=""></span>
       </button>
 
@@ -16,7 +16,7 @@
         <div class="user_option" *ngSwitchCase="'home'">
           <a routerLink="/login">
             <button mat-icon-button color="primary" aria-label="login">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="login" matTooltip="login" routerLink="/login">login</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="login" matTooltip="login" routerLink="/login">login</mat-icon>
             </button>
             <span>
               Login
@@ -27,7 +27,7 @@
         <div class="user_option" *ngSwitchCase="'customer'">
           <a routerLink="/home">
             <button mat-icon-button color="primary" aria-label="home">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="home" matTooltip="home">home</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="home" matTooltip="home">home</mat-icon>
             </button>
             <span>
               Home
@@ -35,7 +35,7 @@
           </a>
           <a routerLink="/home/address">
             <button mat-icon-button color="primary" aria-label="address">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="address" matTooltip="address">add_location_alt</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="address" matTooltip="address">add_location_alt</mat-icon>
             </button>
             <span>
               Address
@@ -43,7 +43,7 @@
           </a>
           <a routerLink="/home/cart">
             <button mat-icon-button color="primary" aria-label="shopping cart">
-              <mat-icon [ngStyle]="{'color':'black'}" [matBadge]="auth.cartAmount" matBadgeColor="accent" aria-label="shopping cart">shopping_cart</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" [matBadge]="cartAmount" matBadgeColor="accent" aria-label="shopping cart">shopping_cart</mat-icon>
             </button>
             <span>
               Cart
@@ -51,7 +51,7 @@
           </a>
           <a>
             <button mat-icon-button color="primary" aria-label="logout" (click)="logout()">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="logout" matTooltip="logout" >logout</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="logout" matTooltip="logout" >logout</mat-icon>
             </button>
           </a>
         </div>
@@ -59,7 +59,7 @@
         <div class="user_option" *ngSwitchCase="'admin'">
           <a routerLink="/admin">
             <button mat-icon-button color="primary" aria-label="home">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="home" matTooltip="home">home</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="home" matTooltip="home">home</mat-icon>
             </button>
             <span>
               Home
@@ -67,7 +67,7 @@
           </a>
           <a routerLink="/admin/order">
             <button mat-icon-button color="primary" aria-label="order">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="order" matTooltip="order">playlist_add_check_circle</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="order" matTooltip="order">playlist_add_check_circle</mat-icon>
             </button>
             <span>
               Order
@@ -75,7 +75,7 @@
           </a>
           <a>
             <button mat-icon-button color="primary" aria-label="logout" (click)="logout()">
-              <mat-icon [ngStyle]="{'color':'black'}" aria-label="logout" matTooltip="logout" >logout</mat-icon>
+              <mat-icon aria-hidden="false" [ngStyle]="{'color':'black'}" aria-label="logout" matTooltip="logout" >logout</mat-icon>
             </button>
           </a>
         </div>

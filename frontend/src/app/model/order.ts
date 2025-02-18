@@ -1,17 +1,17 @@
 export class Order {
-    orderId: number;
-    orderBy: string;
-    orderStatus: string;
-    products: bufcart[];
+    orderId!: number;
+    orderBy!: string;
+    orderStatus!: string;
+    products!: Bufcart[];
 }
 
-export class bufcart {
-    bufcartId: number;
-    orderId: number;
-    email: string;
-    dateAdded: string;
-    quantity: number;
-    price: number;
-    productId: number;
-    productname: string;
+export class Bufcart {
+    bufcartId!: number;
+    orderId!: number;
+    email!: string;
+    dateAdded!: string;
+    quantity!: number;
+    price!: number;
+    productId!: number;
+    productname!: string;
 }

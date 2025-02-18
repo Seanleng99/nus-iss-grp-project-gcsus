@@ -4,5 +4,5 @@ export interface Product {
     price: any;
     productname: string;
     quantity: any;
-    productimage: File;
+    productimage: File | null ;
 }

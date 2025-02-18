@@ -1,15 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/service/api.service';
-import { FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router, RouterLink } from '@angular/router';
+import { ApiService } from '../../service/api.service';
+import { CommonModule, NgStyle } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-register',
+  imports: [ReactiveFormsModule, FormsModule, MatIconModule,CommonModule,
+    NgStyle, NavigationComponent, RouterLink],
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrl: './register.component.scss'
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   registerForm: any;
   constructor(private apiService: ApiService,
     private router: Router,
@@ -18,8 +23,6 @@ export class RegisterComponent implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {}
-  
   createForm() {
     this.registerForm = this.formBuilder.group({
       email: '',
@@ -69,4 +72,3 @@ export class RegisterComponent implements OnInit {
   }
   
 }
-

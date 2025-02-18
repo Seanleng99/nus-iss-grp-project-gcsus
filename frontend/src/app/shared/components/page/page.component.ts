@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page',
+  imports: [],
   templateUrl: './page.component.html',
-  styleUrls: ['./page.component.css']
+  styleUrl: './page.component.scss'
 })
 export class PageComponent {
   @Input() title: string = '';

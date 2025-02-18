@@ -1,26 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/service/api.service';
-import { Product } from 'src/app/model/product';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
-import { NavigationExtras, Router } from '@angular/router';
-import { Route } from '@angular/compiler/src/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationExtras, Router } from '@angular/router';
+import { Product } from '../../model/product';
+import { ApiService } from '../../service/api.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NavigationComponent } from '../navigation/navigation.component';
 
 @Component({
   selector: 'app-admin',
+  imports: [CommonModule, FormsModule, NavigationComponent],
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrl: './admin.component.scss'
 })
 export class AdminComponent implements OnInit {
   products: Product[] = [];
-  fileToUpload: File = null;
+  fileToUpload: File | null = null;
   showAdd = false;
-  auth: string;
+  auth!: string;
   
   constructor(private api: ApiService, private router: Router, private snackBar: MatSnackBar) { }
   imageUrl: string = "/assets/img/noimage.png";
+
   ngOnInit() {
-    if (this.api.isAuthenticated) {
+    if (this.api.isAuthenticated()) {
       this.auth = this.api.getToken();
       this.api.getProducts().subscribe(
         res => {
@@ -29,14 +32,17 @@ export class AdminComponent implements OnInit {
       );
     }
   }
-  handleFileInput(file: FileList) {
-    this.fileToUpload = file.item(0);
+  handleFileInput(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+  if (inputElement.files && inputElement.files.length > 0) {
+    this.fileToUpload = inputElement.files[0]; // Get the first selected file
     var reader = new FileReader();
     reader.onload = (event: any) => {
       this.imageUrl = event.target.result;
     }
-    reader.readAsDataURL(this.fileToUpload);
-  }
+    reader.readAsDataURL(this.fileToUpload as File);
+  }}
+
   show() {
     this.showAdd = true;
   }
@@ -44,7 +50,7 @@ export class AdminComponent implements OnInit {
     this.showAdd = false;
   }
   addProd(desc:any, quan:any, price:any, prodname:any, image:any) {
-    this.api.addProduct(desc.value, quan.value, price.value, prodname.value, this.fileToUpload).subscribe(res => {
+    this.api.addProduct(desc.value, quan.value, price.value, prodname.value, this.fileToUpload as File).subscribe(res => {
       this.products = res.oblist;
       if (res.status == '200') {
         this.snackBar.open('Product successfully added.', 'Close', { duration: 3000 });
@@ -75,7 +81,7 @@ export class AdminComponent implements OnInit {
     this.router.navigate(["admin/edit"], navigationExtras);
   }
 
-  onKeyPressNumeric(e) {
+  onKeyPressNumeric(e:any) {
     var valid = false;
     var key = e.keyCode || e.which;
 

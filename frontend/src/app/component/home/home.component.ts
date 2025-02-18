@@ -1,14 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/service/api.service';
-import { Product } from 'src/app/model/product';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Cart } from 'src/app/model/cart';
-
+import { Cart } from '../../model/cart';
+import { Product } from '../../model/product';
+import { ApiService } from '../../service/api.service';
+import { ProductComponent } from './product/product.component';
+import { NavigationComponent } from '../navigation/navigation.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
+  imports: [ProductComponent, NavigationComponent, CommonModule],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
 
@@ -17,7 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(private api: ApiService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    if (this.api.isAuthenticated) {
+    if (this.api.isAuthenticated()) {
       this.api.getProducts().subscribe(res => {
         this.products = res.oblist;
       });
@@ -28,7 +31,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  addToCart(e) {
+  addToCart(e: any) {
     this.api.addToCart(e).subscribe(res => {
       console.log(res);
       this.snackBar.open('Added to cart successfully.', 'Close', { duration: 3000 });

@@ -1,26 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { LoginComponent } from './component/login/login.component';
 import { ApiService } from './service/api.service';
-import { Router } from '@angular/router';
-
+import { SessionStorageService } from 'ngx-webstorage';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-
-  constructor(private auth: ApiService, private router: Router) {
-
-  }
-  ngOnInit() {
-      if (this.auth.isAuthenticated()!=null && this.auth.getAuthType() == "customer") {
-        this.router.navigate(["/home"]);
-      } else if (this.auth.isAuthenticated()!=null && this.auth.getAuthType() == "admin") {
-        this.router.navigate(["/admin"]);
-      } else {
-        this.router.navigate(["/login"]);
-      }
-   
-  }
+export class AppComponent {
+  title = 'web';
 }

@@ -1,4 +1,4 @@
 export class CartDTO {
-    cartId: number;
-    cartQuantity: number;
+    cartId!: number;
+    cartQuantity!: number;
 }
