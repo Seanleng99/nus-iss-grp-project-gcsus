@@ -13,7 +13,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins(WebConstants.ALLOWED_URL, WebConstants.ALLOWED_URL_PROD)
                 .allowedMethods("GET","POST","PUT","DELETE","OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(true);
+                .allowedHeaders("*");
     }
 }
