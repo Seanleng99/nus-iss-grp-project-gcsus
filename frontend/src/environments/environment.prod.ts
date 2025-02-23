@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   // user base url
-  userBaseUrl:"http://ec2-47-129-174-177.ap-southeast-1.compute.amazonaws.com/user",
+  userBaseUrl:"http://ec2-13-229-197-130.ap-southeast-1.compute.amazonaws.com/user",
   // product base url
   productBaseUrl:"http://ec2-54-255-184-203.ap-southeast-1.compute.amazonaws.com/product",
   // order cart base url
