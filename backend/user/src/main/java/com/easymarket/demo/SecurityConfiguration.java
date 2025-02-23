@@ -38,9 +38,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable();
+		http.csrf().disable()  // Disable CSRF for REST APIs
+			.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow OPTIONS request
+				.anyRequest().authenticated()
+			.and()
+			.cors();  // Enable CORS globally
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-
 	}
 
 	@Override
